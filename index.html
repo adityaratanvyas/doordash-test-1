@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards US - Dynamic Rewarded Discovery DoorDash $500</title>
+    <style>
+        /* ============================================
+           RESET & GLOBAL STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            color: #f5f5f5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================
+           BACKGROUND GRADIENT
+           Inspired by DoorDash official colors:
+           Deep red, black, dark gray with minimal orange
+           ============================================ */
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 25%, #2d1015 50%, #1a1a1a 75%, #0f0f0f 100%);
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* ============================================
+           MAIN CONTAINER
+           Vertical centering with maximum constraints
+           ============================================ */
+        .container {
+            width: 100%;
+            height: 100vh;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeUpHero 0.8s ease-out;
+        }
+
+        @keyframes fadeUpHero {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+            color: #ffffff;
+        }
+
+        /* Accent color for premium feel */
+        .hero h1 .accent {
+            color: #ff4d00;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            font-weight: 400;
+            color: #d0d0d0;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           PRIMARY CTA BUTTON
+           ============================================ */
+        .cta-wrapper {
+            margin: 40px 0;
+            animation: fadeUpHero 1s ease-out 0.1s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background-color: #ff4d00;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 16px rgba(255, 77, 0, 0.15);
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cta-button:hover {
+            background-color: #e64700;
+            box-shadow: 0 6px 24px rgba(255, 77, 0, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           THREE-STEP PROCESS
+           ============================================ */
+        .steps-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 50px;
+            width: 100%;
+            max-width: 900px;
+            animation: fadeUpHero 1.2s ease-out 0.2s both;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 240px;
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background-color: rgba(255, 77, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-icon {
+            background-color: rgba(255, 77, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .step-number {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ff4d00;
+            margin-bottom: 8px;
+        }
+
+        .step h3 {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .step p {
+            font-size: clamp(0.875rem, 1.8vw, 0.95rem);
+            color: #a8a8a8;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* ============================================
+           ELIGIBILITY NOTICE
+           ============================================ */
+        .eligibility {
+            margin-top: 50px;
+            padding: 20px 30px;
+            background-color: rgba(255, 77, 0, 0.08);
+            border: 1px solid rgba(255, 77, 0, 0.15);
+            border-radius: 8px;
+            max-width: 700px;
+            animation: fadeUpHero 1.4s ease-out 0.3s both;
+        }
+
+        .eligibility p {
+            font-size: clamp(0.875rem, 1.8vw, 0.95rem);
+            color: #d0d0d0;
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* ============================================
+           LIVE ACTIVITY NOTIFICATIONS
+           Enhanced design matching website aesthetic
+           ============================================ */
+        .notification-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            max-width: 360px;
+        }
+
+        .notification {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.98) 0%, rgba(30, 20, 25, 0.98) 100%);
+            border: 1px solid rgba(255, 77, 0, 0.2);
+            color: #f5f5f5;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 77, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            position: relative;
+            transform-origin: left center;
+        }
+
+        .notification.active {
+            animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 1;
+        }
+
+        .notification.fadeOut {
+            animation: slideOutLeftSmooth 0.6s cubic-bezier(0.4, 0, 1, 1) forwards;
+        }
+
+        .notification.hidden {
+            display: none;
+        }
+
+        /* Notification Icon */
+        .notification-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 77, 0, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ff4d00;
+            font-weight: 700;
+            animation: iconScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Notification Content */
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .notification-label {
+            font-size: 0.75rem;
+            color: #ff4d00;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .notification-text {
+            font-size: 0.95rem;
+            color: #e8e8e8;
+            font-weight: 500;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .notification-name {
+            color: #ff4d00;
+            font-weight: 700;
+        }
+
+        .notification-action {
+            color: #a8a8a8;
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+           SMOOTH ANIMATIONS
+           ============================================ */
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-120%) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutLeftSmooth {
+            0% {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(-120%) scale(0.95);
+                opacity: 0;
+            }
+        }
+
+        @keyframes iconScaleIn {
+            from {
+                transform: scale(0.5) rotate(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Notification Pulse Animation */
+        .notification::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 8px;
+            height: 8px;
+            background-color: #ff4d00;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.7);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(255, 77, 0, 0);
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN - TABLETS & SMALL DEVICES
+           ============================================ */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 35px 25px;
+            }
+
+            .steps-container {
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .step {
+                min-width: 180px;
+                max-width: 220px;
+            }
+
+            .eligibility {
+                margin-top: 40px;
+                padding: 18px 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                justify-content: flex-start;
+                padding-top: 50px;
+            }
+
+            .hero {
+                margin-bottom: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                margin-bottom: 5px;
+            }
+
+            .cta-wrapper {
+                margin: 25px 0;
+            }
+
+            .cta-button {
+                padding: 14px 40px;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .steps-container {
+                gap: 20px;
+                margin-top: 30px;
+                padding: 0 10px;
+            }
+
+            .step {
+                min-width: 140px;
+                max-width: 160px;
+            }
+
+            .step-icon {
+                width: 52px;
+                height: 52px;
+                margin: 0 auto 16px;
+                font-size: 24px;
+            }
+
+            .step-number {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+
+            .step h3 {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+
+            .step p {
+                font-size: 0.8rem;
+            }
+
+            .eligibility {
+                margin-top: 30px;
+                padding: 14px 18px;
+                max-width: 90%;
+            }
+
+            .eligibility p {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            /* Notification positioning for tablet */
+            .notification-container {
+                bottom: 25px;
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+
+            .notification {
+                padding: 14px 16px;
+                font-size: 0.9rem;
+                gap: 10px;
+            }
+
+            .notification-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+
+            .notification-label {
+                font-size: 0.7rem;
+            }
+
+            .notification-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN - MOBILE
+           ============================================ */
+        @media (max-width: 480px) {
+            html, body {
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 25px 16px;
+                padding-top: 40px;
+                justify-content: flex-start;
+            }
+
+            .hero {
+                margin-bottom: 15px;
+                animation: none;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+                margin-bottom: 8px;
+                line-height: 1.15;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 3px;
+                line-height: 1.5;
+            }
+
+            .cta-wrapper {
+                margin: 20px 0;
+                animation: none;
+            }
+
+            .cta-button {
+                padding: 12px 32px;
+                font-size: 0.95rem;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .steps-container {
+                gap: 12px;
+                margin-top: 20px;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0;
+                animation: none;
+            }
+
+            .step {
+                min-width: 100%;
+                max-width: 100%;
+                padding: 12px;
+                background-color: rgba(255, 77, 0, 0.05);
+                border: 1px solid rgba(255, 77, 0, 0.1);
+                border-radius: 6px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step-icon {
+                width: 44px;
+                height: 44px;
+                margin: 0 auto 12px;
+                font-size: 20px;
+            }
+
+            .step-number {
+                font-size: 14px;
+                margin-bottom: 4px;
+            }
+
+            .step h3 {
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+            }
+
+            .step p {
+                font-size: 0.75rem;
+                color: #999;
+            }
+
+            .eligibility {
+                margin-top: 20px;
+                padding: 12px 14px;
+                max-width: 100%;
+                border-radius: 6px;
+                animation: none;
+            }
+
+            .eligibility p {
+                font-size: 0.75rem;
+                line-height: 1.4;
+            }
+
+            /* ============================================
+               MOBILE NOTIFICATION STYLING
+               Better suited for smaller screens
+               ============================================ */
+            .notification-container {
+                position: fixed;
+                bottom: 20px;
+                left: 16px;
+                right: 16px;
+                max-width: none;
+                width: calc(100% - 32px);
+                z-index: 100;
+            }
+
+            .notification {
+                padding: 12px 14px;
+                font-size: 0.85rem;
+                gap: 10px;
+                border-radius: 6px;
+                flex-wrap: nowrap;
+            }
+
+            .notification-icon {
+                width: 28px;
+                height: 28px;
+                min-width: 28px;
+                font-size: 13px;
+            }
+
+            .notification-content {
+                gap: 2px;
+                min-width: 0;
+            }
+
+            .notification-label {
+                font-size: 0.65rem;
+                letter-spacing: 0.3px;
+            }
+
+            .notification-text {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+
+            .notification-name {
+                color: #ff4d00;
+                font-weight: 700;
+            }
+
+            .notification-action {
+                color: #a0a0a0;
+                font-size: 0.75rem;
+            }
+
+            .notification::before {
+                width: 6px;
+                height: 6px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* ============================================
+           ACCESSIBILITY
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ============================================
+           DARK MODE SUPPORT (System Preference)
+           ============================================ */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d0f15 50%, #1a1a1a 75%, #0a0a0a 100%);
+            }
+        }
+
+        /* ============================================
+           LANDSCAPE MODE MOBILE
+           ============================================ */
+        @media (max-height: 600px) and (max-width: 768px) {
+            .container {
+                padding-top: 30px;
+                padding-bottom: 30px;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+                margin-bottom: 6px;
+            }
+
+            .hero p {
+                font-size: 0.85rem;
+                margin-bottom: 0;
+            }
+
+            .cta-wrapper {
+                margin: 12px 0;
+            }
+
+            .cta-button {
+                padding: 10px 28px;
+                font-size: 0.9rem;
+            }
+
+            .steps-container {
+                margin-top: 12px;
+                gap: 8px;
+            }
+
+            .step {
+                min-width: 120px;
+                padding: 8px;
+            }
+
+            .step-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+                margin: 0 auto 6px;
+            }
+
+            .step-number {
+                font-size: 12px;
+                margin-bottom: 2px;
+            }
+
+            .step h3 {
+                font-size: 0.8rem;
+                margin-bottom: 4px;
+            }
+
+            .step p {
+                font-size: 0.7rem;
+            }
+
+            .eligibility {
+                margin-top: 8px;
+                padding: 8px 10px;
+            }
+
+            .eligibility p {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HERO SECTION -->
+        <div class="hero">
+            <h1>Unlock <span class="accent">$500</span> in DoorDash Value</h1>
+            <p>Discover exclusive rewards tailored to your preferences. Seamless, rewarding, premium.</p>
+        </div>
+
+        <!-- PRIMARY CTA BUTTON -->
+        <div class="cta-wrapper">
+            <!-- CUSTOMIZABLE: Update the href to your desired destination -->
+            <a href="https://giftclick.org/aff_c?offer_id=455&aff_id=117413&source=doordash-test-1" class="cta-button">Claim Your Rewards</a>
+        </div>
+
+        <!-- THREE-STEP PROCESS -->
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-icon">
+                    <!-- Simple icon: Profile/User -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="10" r="5" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                        <path d="M8 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#ff4d00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="step-number">01</span>
+                <h3>Create Your Profile</h3>
+                <p>Set up your account in seconds with basic information.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-icon">
+                    <!-- Simple icon: Browse/Discover -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="6" width="8" height="8" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                        <rect x="18" y="6" width="8" height="8" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                        <rect x="6" y="18" width="8" height="8" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                        <rect x="18" y="18" width="8" height="8" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                    </svg>
+                </div>
+                <span class="step-number">02</span>
+                <h3>Explore Offers</h3>
+                <p>Browse curated rewards matched to your interests.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-icon">
+                    <!-- Simple icon: Checkmark/Claim -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16l3 3 9-9" stroke="#ff4d00" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="16" cy="16" r="11" stroke="#ff4d00" stroke-width="1.5" fill="none"/>
+                    </svg>
+                </div>
+                <span class="step-number">03</span>
+                <h3>Claim & Enjoy</h3>
+                <p>Redeem your rewards instantly on DoorDash.</p>
+            </div>
+        </div>
+
+        <!-- ELIGIBILITY NOTICE -->
+        <div class="eligibility">
+            <p>This offer is available exclusively to residents of the United Kingdom, United States, Canada, or Australia.</p>
+        </div>
+    </div>
+
+    <!-- LIVE ACTIVITY NOTIFICATIONS -->
+    <div class="notification-container">
+        <div class="notification" id="notificationElement">
+            <div class="notification-icon">✓</div>
+            <div class="notification-content">
+                <div class="notification-label">REWARD CLAIMED</div>
+                <div class="notification-text"><span class="notification-name">Sarah</span> <span class="notification-action">claimed</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // NOTIFICATION SYSTEM
+        // ============================================
+
+        // CUSTOMIZABLE: Add or modify names for notifications
+        const firstNames = [
+            'Sarah', 'James', 'Emma', 'Michael', 'Jessica', 'David', 
+            'Sophie', 'Christopher', 'Olivia', 'Daniel', 'Ava', 'Ryan',
+            'Isabella', 'Joshua', 'Mia', 'Andrew', 'Charlotte', 'Kevin',
+            'Amelia', 'Brandon', 'Harper', 'Jason', 'Evelyn', 'Matthew',
+            'Grace', 'Joseph', 'Chloe', 'Anthony', 'Lily', 'Tyler'
+        ];
+
+        const lastNames = [
+            'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia',
+            'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez',
+            'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore',
+            'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White',
+            'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson'
+        ];
+
+        // CUSTOMIZABLE: Modify the reward amount or text
+        const rewardText = 'DoorDash $500';
+
+        /**
+         * Generate a random full name for notifications
+         */
+        function getRandomName() {
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            return `${firstName} ${lastName}`;
+        }
+
+        /**
+         * Create and display a notification with smooth animations
+         */
+        function showNotification() {
+            const notificationElement = document.getElementById('notificationElement');
+            const randomName = getRandomName();
+
+            // Remove hidden class and reset classes
+            notificationElement.classList.remove('hidden', 'fadeOut');
+
+            // Update notification content with new name
+            notificationElement.innerHTML = `
+                <div class="notification-icon">✓</div>
+                <div class="notification-content">
+                    <div class="notification-label">REWARD CLAIMED</div>
+                    <div class="notification-text"><span class="notification-name">${randomName}</span> <span class="notification-action">claimed</span></div>
+                </div>
+            `;
+
+            // Trigger reflow to restart animation
+            void notificationElement.offsetWidth;
+
+            // Add active class for slide-in animation
+            notificationElement.classList.add('active');
+
+            // Display for 5 seconds
+            setTimeout(() => {
+                // Add fadeOut animation
+                notificationElement.classList.remove('active');
+                notificationElement.classList.add('fadeOut');
+
+                // Hide after animation completes (0.6s)
+                setTimeout(() => {
+                    notificationElement.classList.add('hidden');
+                    notificationElement.classList.remove('fadeOut');
+
+                    // Schedule next notification after 8 seconds of being hidden
+                    setTimeout(showNotification, 8000);
+                }, 600);
+            }, 5000);
+        }
+
+        // Start the notification cycle after 2 seconds
+        setTimeout(showNotification, 2000);
+
+        // Log page load for analytics
+        window.addEventListener('load', () => {
+            console.log('Rewards US landing page loaded successfully');
+        });
+    </script>
+</body>
+</html>
